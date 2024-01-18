@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <title>Find me</title>
+
+</head>
+
+<body>
+
+    <div class="container mx-auto mt-10">
+        <div>
+            <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow mx-auto mt-10">
+                <div class="flex justify-end px-4 pt-4">
+
+
+                </div>
+                <div class="flex flex-col items-center pb-10">
+                    <img class="w-24 h-24 mb-3 rounded-full shadow-lg" id="image" src="" alt="Bonnie image" />
+                    <h5 class="mb-1 text-xl font-medium text-gray-900 " id="name">Bonnie Green</h5>
+                    <h3 class="text-sm text-gray-800 " id="gender">Visual Designer</h3>
+                    <h3 class="text-sm text-gray-800 " id="date">Visual Designer</h3>
+                    <h3 class="text-sm text-gray-800 " id="email">Visual Designer</h3>
+                    <h3 class="text-sm text-gray-800 " id="location">Visual Designer</h3>
+
+                </div>
+            </div>
+            <div>
+
+                <form class="max-w-sm mx-auto">
+                    <label for="genderSelect" class="block mb-2 text-sm font-medium text-gray-900 ">Select a Gender</label>
+                    <select id="genderSelect"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                       
+                    </select>
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>  
+  
+            const mySelect = document.getElementById("genderSelect");
+            // console.log(selectedGender);  
+
+            genderSelect.addEventListener("change", function(){
+            const selectedGender = mySelect.value;
+            getRandomUser(selectedGender);  
+        
+        });
+
+
+        async function getRandomUser(selectedGender) {
+                 
+           
+
+            const apiUrl = 'https://randomuser.me/api/?gender=';
+            
+
+            const response = await fetch(apiUrl + selectedGender);
+            const data = await response.json();
+            const user = data.results[0];
+            console.log(user);
+            displayUser(user)
+
+        }
+
+        function displayUser(user) {
+            const name = document.getElementById('name');
+            const gender = document.getElementById('gender');
+            const email = document.getElementById('email');
+            const date = document.getElementById('date');
+            const location = document.getElementById('location');
+            const image = document.getElementById('image');
+
+            name.innerText = `${user.name.title}. ${user.name.first} ${user.name.last} `;
+            gender.innerText = `${user.gender} `;
+            email.innerText = `${user.email} `;
+            date.innerText = `${user.dob.date} `;
+            location.innerText = `${user.location.street.name}, ${user.location.city},${user.location.state},${user.location.country},${user.location.postcode}`;
+            image.setAttribute('src', `${user.picture.large}`);
+
+        }
+
+        getRandomUser(genderSelect.value);
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+</body>
+
+</html>
